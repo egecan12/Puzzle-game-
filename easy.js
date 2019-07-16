@@ -81,6 +81,8 @@ const Object15 = {
   y: 0
 };
 
+const boxes = [...document.querySelectorAll('[class^="box"]')];
+
 
 
 // blankSpace: initialize blank square as last piece so as to remember where it is.
@@ -92,6 +94,7 @@ const blankSpace = {
   y: 300,
   order: 16
 };
+
 
 
 const puzzlePieces = [Object1, Object2, Object3, Object4, Object5, Object6, Object7, Object8, Object9, Object10, Object11, Object12, Object13, Object14, Object15, blankSpace];
@@ -110,54 +113,80 @@ const puzzle = {
     // and within that, invokes the slide function
     ***************************************/
 
-    function initialize() {
-      puzzlePieces.map(function (puzzlePiece) {
-        puzzlePiece.addEventListener('click', slide);
-  
-      })
+    for (i = 0; i < boxes.length; i++) {
+      boxes[i].addEventListener("click", this.slide3);
     }
-    
-
-
-
 
     // show puzzle pieces
     this.display();
   },
   display: function () {
     // initialize pieces to their proper order
-    this.pieces.forEach(piece => {
-      const pieceDOM = document.querySelector(piece.name);
-      TweenLite.set(pieceDOM, {
-        x: piece.x,
-        y: piece.y
-      });
+
+    TweenMax.set(puzzlePieces, {
+      x: 0,
+      y: 0
+
     });
   },
+
+
+  /// SLIDE FUNCTIONs for 4 different  movement POSITION 
+
+
+  //that goes to the right side
   slide: function () {
-    // call isMoveable to find out direction to move
-    // remember to adjust coordinates including adjusting blank piece's coordinates
-    /************************************
-    // STEP 4 - Implement slide function so that you set x,y coordinates of appropriate puzzle piece(s)
-    *********************************/
-
-    // Now animate current puzzle piece now that x, y coordinates have been set above
-    TweenMax.to(this.currentPiece, 0.17, {
-      x: this.pieces[this.currentPiece.dataset.idx].x,
-      y: this.pieces[this.currentPiece.dataset.idx].y,
-      ease: Power0.easeNone
+    TweenMax.to(this, 1, {
+      x: 100,
+      y: 0
     });
-  },
-  isMoveable: function () {
-    /********************************************
-    // STEP 3 - Implement isMoveable function to find out / return which direction to move
-    // Is the clicked piece movable?
-    // If yes, then return a direction to one of: "up", "down", "left", "right"
-    // If no, then return a direction of ""
-     ******************************************/
-    if( (blankSpace.x === this.pieces.x + this.distance)&&(blankSpace.y=== this.pieces.y+this.distance)) {
 
-      return true
+  },
+
+
+  //that goes to the left side
+  slide2: function () {
+
+    TweenMax.to(this, 1, {
+      x: -100,
+      y: 0
+    });
+
+  },
+
+
+  //that goes to the down side
+  slide3: function () {
+
+    TweenMax.to(this, 1, {
+      x: 0,
+      y: 100
+      
+    });
+    
+    updatePosition(puzzlePieces.x, puzzlePieces + 100);
+
+
+  },
+
+  //that goes to the up side
+
+  slide4: function () {
+    TweenMax.to(this, 1, {
+      x: 0,
+      y: -100
+    });
+
+    updatePosition(this.object1.x, this.object1.y );
+
+  },
+
+
+  isMoveable: function () {
+
+    if ((blankSpace.x === this.x) && (blankSpace.y === this.y)) {
+
+      return console.log("this is working");
     } else {
       false
     }
@@ -165,6 +194,11 @@ const puzzle = {
 
   }
 };
+
+function updatePosition(x,y) {
+  object1.x=x
+  Object1.y=y +100
+}
 
 puzzle.initialize();
 
