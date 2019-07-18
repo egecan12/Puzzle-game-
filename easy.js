@@ -114,7 +114,7 @@ const puzzle = {
     ***************************************/
 
     for (i = 0; i < boxes.length; i++) {
-      boxes[i].addEventListener("click", this.slide3);
+      boxes[i].addEventListener("click", this.down);
     }
 
     // show puzzle pieces
@@ -135,52 +135,60 @@ const puzzle = {
 
 
   //that goes to the right side
-  slide: function () {
+  rigt: function () {
     TweenMax.to(this, 1, {
       x: 100,
       y: 0
     });
-
+    updatePosition(100, 0);
   },
 
 
   //that goes to the left side
-  slide2: function () {
+  left: function () {
 
     TweenMax.to(this, 1, {
       x: -100,
       y: 0
     });
 
+
+    updatePosition(-100, 0);
   },
 
 
   //that goes to the down side
-  slide3: function () {
+  down: function () {
 
     TweenMax.to(this, 1, {
       x: 0,
       y: 100
-      
+
     });
-    
-    updatePosition(puzzlePieces.x, puzzlePieces + 100);
+
+    updatePosition(0, 100);
 
 
   },
 
   //that goes to the up side
 
-  slide4: function () {
+  up: function () {
     TweenMax.to(this, 1, {
       x: 0,
       y: -100
     });
 
-    updatePosition(this.object1.x, this.object1.y );
+    updatePosition(0, -100);
 
   },
 
+  updatePosition: function (x, y) {
+
+    this.pieces.x = x
+    this.pieces.y = y
+
+  },
 
   isMoveable: function () {
 
@@ -193,12 +201,15 @@ const puzzle = {
 
 
   }
+
+
+
+
+
+
 };
 
-function updatePosition(x,y) {
-  object1.x=x
-  Object1.y=y +100
-}
+
 
 puzzle.initialize();
 
